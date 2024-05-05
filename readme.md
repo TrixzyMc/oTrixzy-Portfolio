@@ -1,6 +1,3 @@
-Learn more about me here.
-
-
 ## 🚀 About Me
 
 Hello there! Call me oTrixzy for the time we know eachother. 👋
