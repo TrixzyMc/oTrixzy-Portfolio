@@ -1,0 +1,13 @@
+options:
+	color2: c54242
+	color1: 712222
+	
+every 5 minutes:
+	set {_entities::*} to all entities where [input is not player]
+	set {_entities::*} to {_entities::*} where [input is not item display]
+	set {_entities::*} to {_entities::*} where [input is not text display]
+	delete all entities where [{_entities::*} contains input]
+	
+	broadcast "%nl%   <#{@color1}>&m                              <#{@color2}>&l CLEARLAG <#{@color1}>&m                              %nl%"
+	broadcast "                     <#{@color2}>ClearLag &fhas cleared %size of {_entities::*}% entities!"
+	broadcast "%nl%   <#{@color1}>&m                                                                             %nl%"
