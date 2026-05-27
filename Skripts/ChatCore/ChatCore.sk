@@ -3,7 +3,7 @@
 # ------------------------ CREATOR: oTrixzy ------------------------
 # -------------------------- Version: 1.2 --------------------------
 # -------------------- Released Date: 7/21/2024 --------------------
-# ------- Github: github.com/TrixzyMc/oTrixzy-Portfolio/------------
+# --------- Github: github.com/TrixzyMc/oTrixzy-Portfolio/ ---------
 # ------------------------------------------------------------------
 
 on load:
@@ -46,7 +46,7 @@ function registerTag(id: integer, tag: string, required-permission: string):
 # --> Functions to create GUIS <-- #
 
 function ChatTags(p: player, page: number=1):
-    create a gui with virtual chest inventory with 5 rows named "ChatTags (Page ##%{_page}%)":
+    create a gui with virtual chest inventory with 5 rows named "ChatTags (Page #%{_page}%)":
         make gui slot (all integers between 0 and 44) with black stained glass pane named "&7" with nbt from "{HideFlags:127}"
         make gui slot (all integers between 10 and 16, all integers between 19 and 25, all integers between 28 and 34) with stone button named "&7" with nbt from "{HideFlags:127}"
         make gui slot 4 with knowledge book named "" with nbt from "{HideFlags:127}"
@@ -85,7 +85,7 @@ function ChatTags(p: player, page: number=1):
     open last gui to {_p}
 
 function ChatColor(p: player, page: number=1):
-    create a gui with virtual chest inventory with 5 rows named "ChatColor (Page ##%{_page}%)":
+    create a gui with virtual chest inventory with 5 rows named "ChatColor (Page #%{_page}%)":
         make gui slot (all integers between 0 and 44) with black stained glass pane named "&7" with nbt from "{HideFlags:127}" 
         make gui slot (all integers between 10 and 16, all integers between 19 and 25, all integers between 28 and 34) with stone button named "&7" with nbt from "{HideFlags:127}"
         make gui slot 4 with knowledge book named "" with nbt from "{HideFlags:127}"
