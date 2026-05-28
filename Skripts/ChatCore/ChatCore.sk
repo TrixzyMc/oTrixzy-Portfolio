@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------
-# ----------------------- Official Rewrite -------------------------
+# ----------------------- Official Release -------------------------
 # ------------------------ CREATOR: oTrixzy ------------------------
 # -------------------------- Version: 1.2 --------------------------
 # -------------------- Released Date: 7/21/2024 --------------------
@@ -31,16 +31,16 @@ on load:
 	# Put &l in front of hexcode / legacy code names to make it bold.
 	#       THIS WILL NOT MAKE THE CHAT COLOR BOLT ITSELF, PUT IT IN THE COLOR STRING TO DO THAT.
 	registerColor(1, "&lᴡʜɪᴛᴇ", "chatCore.color.white", "<#ffffff>")
-	registerColor(2, "<bold>ʙʟᴜᴇ ɪᴄᴇ", "chatCore.color.blueIce", "<gradient:##A9FFFF:##00AAFF>")
-	registerColor(3, "<bold>sᴜɴsᴇᴛ", "chatCore.color.sunset", "<gradient:##FF7A18:##FF3D81>")
-	registerColor(4, "<bold>ᴍɪɴᴛ", "chatCore.color.mint", "<gradient:##7CFFCB:##2FE6A6>")
-	registerColor(5, "<bold>ʀᴏʏᴀʟ", "chatCore.color.royal", "<gradient:##7B7BFF:##3B3BFF>")
+	registerColor(2, "<bold>ʙʟᴜᴇ ɪᴄᴇ", "chatCore.color.blueIce", "<gradient:#A9FFFF:#00AAFF>")
+	registerColor(3, "<bold>sᴜɴsᴇᴛ", "chatCore.color.sunset", "<gradient:#FF7A18:#FF3D81>")
+	registerColor(4, "<bold>ᴍɪɴᴛ", "chatCore.color.mint", "<gradient:#7CFFCB:#2FE6A6>")
+	registerColor(5, "<bold>ʀᴏʏᴀʟ", "chatCore.color.royal", "<gradient:#7B7BFF:#3B3BFF>")
 
 	registerTag(1, "&f☁ &8•", "chatCore.tags.Cloud")
 	registerTag(2, "<#ECAD22>⚡ &8•", "chatCore.tags.Lightning")
 	registerTag(3, "<#2261EC>❄ &8•", "chatCore.tags.Frost")
 	registerTag(4, "&e✦ &8•", "chatCore.tags.Star")
-	registerTag(5, "<gradient:##FF9A9E:##FAD0C4>❤ <dark_gray>•", "chatCore.tags.Heart")
+	registerTag(5, "<gradient:#FF9A9E:#FAD0C4>❤ <dark_gray>•", "chatCore.tags.Heart")
 	registerTag(6, "<#2261EC>🦈 &8•", "chatCore.tags.Shark")
 	
 	registerExampleText("Charming!")
@@ -93,11 +93,7 @@ function ChatTags(p: player, page: number=1):
 		loop all integers between {_start_index} and {_end_index}:
 			exit loop if {ChatCore::ChatTags::Registered::%loop-value%} is not set
 			
-			if {ChatCore::ChatTags::Registered::%loop-value%::name} contains "gradient":
-				set {_text} to mini message from "%{ChatCore::ChatTags::Registered::%loop-value%::name}%"
-			else:
-				set {_text} to "%{ChatCore::ChatTags::Registered::%loop-value%::name}%"
-			
+			set {_text} to formatted "%{ChatCore::ChatTags::Registered::%loop-value%::name}%"
 			if {_p} has permission "%{ChatCore::ChatTags::Registered::%loop-value%::requiredPermission}%":
 				set {_i} to name tag of mending named "%{_text}%"  with all item flags
 				
@@ -137,14 +133,10 @@ function ChatColor(p: player, page: number=1):
 		loop all integers between {_start_index} and {_end_index}:
 			exit loop if {ChatCore::ChatColor::Registered::%loop-value%} is not set
 			set {_color} to {ChatCore::ChatColor::Registered::%loop-value%::color}
+		
+			set {_preview} to formatted "%{_color}%%getRandomExampleText()%"
+			set {_text} to formatted "%{_color}%%{ChatCore::ChatColor::Registered::%loop-value%::name}%"
 			
-			if {ChatCore::ChatColor::Registered::%loop-value%::color} contains "gradient":
-				set {_text} to mini message from "%{_color}%%{ChatCore::ChatColor::Registered::%loop-value%::name}%"
-				set {_preview} to mini message from "%{_color}%%getRandomExampleText()%"
-			else:
-				set {_text} to "%{_color}%%{ChatCore::ChatColor::Registered::%loop-value%::name}%"
-				set {_preview} to "%{_color}%%getRandomExampleText()%"
-				
 			if {_p} has permission {ChatCore::ChatColor::Registered::%loop-value%::requiredPermission}:
 				set {_i} to name tag of mending named "%{_text}%"  with all item flags
 				
@@ -180,13 +172,9 @@ on chat:
 			play sound "BLOCK_NOTE_BLOCK_PLING" with volume 0.4 and pitch 1 to loop-player
 			send action bar "&aʏᴏᴜ ʜᴀᴠᴇ ʙᴇᴇɴ ᴘɪɴɢᴇᴅ ɪɴ ᴄʜᴀᴛ" to loop-player
 		
-		if {ChatCore::ChatColor::PlayerColor::%player's uuid%} contains "gradient":
-			replace message with mini message from "%{ChatCore::ChatColor::PlayerColor::%player's uuid%} ? "&7"%%message%" in message
-		else:
-			replace message with "%{ChatCore::ChatColor::PlayerColor::%player's uuid%} ? "&7"%%message%" in message
-			
-		set {_prefix} to formatPrefix(colored player's prefix)
-		set chat format to colored "%player's suffix% %{_prefix}%&r &f%player's display name% &8» %message%"
+	replace message with formatted "%{ChatCore::ChatColor::PlayerColor::%player's uuid%} ? "&7"%%message%" in message
+	set {_prefix} to formatPrefix(colored player's prefix)
+	set chat format to colored "%player's suffix% %{_prefix}%&r &f%player's display name% &8» %message%"
 	
 # --> Commands <-- #
 command /chatcolor:
@@ -196,4 +184,3 @@ command /chatcolor:
 command /tags:
 	trigger:
 		ChatTags(player)
-
