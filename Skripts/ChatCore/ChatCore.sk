@@ -93,7 +93,7 @@ function ChatTags(p: player, page: number=1):
 		loop all integers between {_start_index} and {_end_index}:
 			exit loop if {ChatCore::ChatTags::Registered::%loop-value%} is not set
 			
-			set {_text} to formatted "%{ChatCore::ChatTags::Registered::%loop-value%::name}%"
+			set {_text} to formatted "&f%{ChatCore::ChatTags::Registered::%loop-value%::name}%"
 			if {_p} has permission "%{ChatCore::ChatTags::Registered::%loop-value%::requiredPermission}%":
 				set {_i} to name tag of mending named "%{_text}%"  with all item flags
 				
@@ -134,8 +134,8 @@ function ChatColor(p: player, page: number=1):
 			exit loop if {ChatCore::ChatColor::Registered::%loop-value%} is not set
 			set {_color} to {ChatCore::ChatColor::Registered::%loop-value%::color}
 		
-			set {_preview} to formatted "%{_color}%%getRandomExampleText()%"
-			set {_text} to formatted "%{_color}%%{ChatCore::ChatColor::Registered::%loop-value%::name}%"
+			set {_preview} to formatted "&f%{_color}%%getRandomExampleText()%"
+			set {_text} to formatted "&f%{_color}%%{ChatCore::ChatColor::Registered::%loop-value%::name}%"
 			
 			if {_p} has permission {ChatCore::ChatColor::Registered::%loop-value%::requiredPermission}:
 				set {_i} to name tag of mending named "%{_text}%"  with all item flags
@@ -184,3 +184,4 @@ command /chatcolor:
 command /tags:
 	trigger:
 		ChatTags(player)
+
