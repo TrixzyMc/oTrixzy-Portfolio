@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------
-# ----------------------- Official Release -------------------------
+# ----------------------- Official Rewrite -------------------------
 # ------------------------ CREATOR: oTrixzy ------------------------
-# -------------------------- Version: 1.3 --------------------------
+# -------------------------- Version: 1.2 --------------------------
 # -------------------- Released Date: 7/21/2024 --------------------
 # --------- Github: github.com/TrixzyMc/oTrixzy-Portfolio/ ---------
 # ------------------------------------------------------------------
@@ -12,9 +12,9 @@ options:
 
 on load:
 	# All deletes are required for the skript to work, Don't worry when it will reloads it will reload all chat colors.
-	delete {-ChatCore::ChatColor::Registered::*} 
-	delete {-ChatCore::ChatTags::Registered::*}
-	delete  {-ChatCore::ExampleTexts::*}
+	delete {ChatCore::ChatColor::Registered::*} 
+	delete {ChatCore::ChatTags::Registered::*}
+	delete  {ChatCore::ExampleTexts::*}
 	
 	# Feel free to delete this, Only gets sent to server administrators. EG. People with Permission ChatCore.Admin.
 	send "{@prefix} &fAll chat colors & chat tags have been reloaded." to all players where [input has permission "ChatCore.Admin"]
@@ -54,32 +54,32 @@ on load:
 # --> Functions to register Color / Tags. <-- #
 function registerColor(id: integer, name: string, requiredPermission: string, colorHex: string):
 
-	set {-ChatCore::ChatColor::Registered::%{_id}%} to true
+	set {ChatCore::ChatColor::Registered::%{_id}%} to true
 
-	set {-ChatCore::ChatColor::Registered::%{_id}%::name} to {_name}
-	set {-ChatCore::ChatColor::Registered::%{_id}%::color} to {_colorHex}
-	set {-ChatCore::ChatColor::Registered::%{_id}%::lore} to " %{_colorHex}%<bold>| %{_colorHex}%Lore Coming Soon..."
-	set {-ChatCore::ChatColor::Registered::%{_id}%::requiredPermission} to {_requiredPermission}
+	set {ChatCore::ChatColor::Registered::%{_id}%::name} to {_name}
+	set {ChatCore::ChatColor::Registered::%{_id}%::color} to {_colorHex}
+	set {ChatCore::ChatColor::Registered::%{_id}%::lore} to " %{_colorHex}%<bold>| %{_colorHex}%Lore Coming Soon..."
+	set {ChatCore::ChatColor::Registered::%{_id}%::requiredPermission} to {_requiredPermission}
 
 function registerTag(id: integer, tag: string, required-permission: string):
-	set {-ChatCore::ChatTags::Registered::%{_id}%} to true
+	set {ChatCore::ChatTags::Registered::%{_id}%} to true
 
-	set {-ChatCore::ChatTags::Registered::%{_id}%::name} to {_tag}
-	set {-ChatCore::ChatTags::Registered::%{_id}%::requiredPermission} to {_required-permission}
+	set {ChatCore::ChatTags::Registered::%{_id}%::name} to {_tag}
+	set {ChatCore::ChatTags::Registered::%{_id}%::requiredPermission} to {_required-permission}
 
 function registerExampleText(text: string):
-	add {_text} to {-ChatCore::ExampleTexts::*}
+	add {_text} to {ChatCore::ExampleTexts::*}
 	
 # --> Functions to create GUIS <-- #
 
 function getRandomExampleText():: string:
-	set {_random} to random integer between 1 and size of {-ChatCore::ExampleTexts::*}
-	return {-ChatCore::ExampleTexts::%{_random}%}
+	set {_random} to random integer between 1 and size of {ChatCore::ExampleTexts::*}
+	return {ChatCore::ExampleTexts::%{_random}%}
 	
 function ChatTags(p: player, page: number=1):
 	create a gui with virtual chest inventory with 5 rows named "ChatTags (Page #%{_page}%)":
-		make gui slot (all integers between 0 and 44) with black stained glass pane named "&7" with all item flags
-		make gui slot (all integers between 10 and 16, all integers between 19 and 25, all integers between 28 and 34) with stone button named "&7" with all item flags
+		make gui slot (all integers between 0 and 44) with black stained glass pane named "&7" without entire tooltip
+		make gui slot (all integers between 10 and 16, all integers between 19 and 25, all integers between 28 and 34) with stone button named "&7" without entire tooltip
 		make gui slot 4 with knowledge book named "" with all item flags
 		set {_start_index} to ({_page} - 1) * 21 + 1
 		set {_end_index} to {_page} * 21
@@ -91,14 +91,14 @@ function ChatTags(p: player, page: number=1):
 		set {_slot} to 10
 
 		loop all integers between {_start_index} and {_end_index}:
-			exit loop if {-ChatCore::ChatTags::Registered::%loop-value%} is not set
+			exit loop if {ChatCore::ChatTags::Registered::%loop-value%} is not set
 			
-			if {-ChatCore::ChatTags::Registered::%loop-value%::name} contains "gradient":
-				set {_text} to mini message from "%{-ChatCore::ChatTags::Registered::%loop-value%::name}%"
+			if {ChatCore::ChatTags::Registered::%loop-value%::name} contains "gradient":
+				set {_text} to mini message from "%{ChatCore::ChatTags::Registered::%loop-value%::name}%"
 			else:
-				set {_text} to "%{-ChatCore::ChatTags::Registered::%loop-value%::name}%"
+				set {_text} to "%{ChatCore::ChatTags::Registered::%loop-value%::name}%"
 			
-			if {_p} has permission "%{-ChatCore::ChatTags::Registered::%loop-value%::requiredPermission}%":
+			if {_p} has permission "%{ChatCore::ChatTags::Registered::%loop-value%::requiredPermission}%":
 				set {_i} to name tag of mending named "%{_text}%"  with all item flags
 				
 				set {_lore::*} to "&8ᴛᴀɢs"
@@ -122,8 +122,8 @@ function ChatTags(p: player, page: number=1):
 
 function ChatColor(p: player, page: number=1):
 	create a gui with virtual chest inventory with 5 rows named "ChatColor (Page #%{_page}%)":
-		make gui slot (all integers between 0 and 44) with black stained glass pane named "&7" with all item flags 
-		make gui slot (all integers between 10 and 16, all integers between 19 and 25, all integers between 28 and 34) with stone button named "&7" with all item flags
+		make gui slot (all integers between 0 and 44) with black stained glass pane named "&7" without entire tooltip 
+		make gui slot (all integers between 10 and 16, all integers between 19 and 25, all integers between 28 and 34) with stone button named "&7" without entire tooltip
 		make gui slot 4 with knowledge book named "" with all item flags
 		set {_start_index} to ({_page} - 1) * 21 + 1
 		set {_end_index} to {_page} * 21
@@ -135,24 +135,24 @@ function ChatColor(p: player, page: number=1):
 		set {_slot} to 10
 
 		loop all integers between {_start_index} and {_end_index}:
-			exit loop if {-ChatCore::ChatColor::Registered::%loop-value%} is not set
-			set {_color} to {-ChatCore::ChatColor::Registered::%loop-value%::color}
+			exit loop if {ChatCore::ChatColor::Registered::%loop-value%} is not set
+			set {_color} to {ChatCore::ChatColor::Registered::%loop-value%::color}
 			
-			if {-ChatCore::ChatColor::Registered::%loop-value%::color} contains "gradient":
-				set {_text} to mini message from "%{_color}%%{-ChatCore::ChatColor::Registered::%loop-value%::name}%"
+			if {ChatCore::ChatColor::Registered::%loop-value%::color} contains "gradient":
+				set {_text} to mini message from "%{_color}%%{ChatCore::ChatColor::Registered::%loop-value%::name}%"
 				set {_preview} to mini message from "%{_color}%%getRandomExampleText()%"
 			else:
-				set {_text} to "%{_color}%%{-ChatCore::ChatColor::Registered::%loop-value%::name}%"
+				set {_text} to "%{_color}%%{ChatCore::ChatColor::Registered::%loop-value%::name}%"
 				set {_preview} to "%{_color}%%getRandomExampleText()%"
 				
-			if {_p} has permission "%{-ChatCore::ChatColor::Registered::%loop-value%::requiredPermission}%":
+			if {_p} has permission {ChatCore::ChatColor::Registered::%loop-value%::requiredPermission}:
 				set {_i} to name tag of mending named "%{_text}%"  with all item flags
 				
 				set {_lore::*} to "&8ᴛᴀɢs"
 				add "%nl%<#B022EC>%{_p}% &8» %{_preview}%" to {_lore::*}
 				add "%nl%<#B022EC>ᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ" to {_lore::*}
 				make gui slot {_slot} with {_i} with lore {_lore::*}:
-					set {-ChatCore::ChatColor::PlayerColor::%{_p}'s uuid%} to {_color}
+					set {ChatCore::ChatColor::PlayerColor::%{_p}'s uuid%} to {_color}
 					close player's inventory
 					send action bar "{@prefix} &fYou equipped the color %{_text}%&f!"
 					
@@ -174,17 +174,16 @@ function formatPrefix(prefix: text) :: text:
 	return {_result}
 
 on chat:
-	set {-ChatCore::ChatColor::PlayerColor::%player's uuid%} to "&7" if {-ChatCore::ChatColor::PlayerColor::%player's uuid%} is not set
 	loop all players:
 		if message contains "%loop-player%":
-			replace "%loop-player%" with "&e&l@%loop-player%%{-ChatCore::ChatColor::PlayerColor::%player's uuid%}%" in message
+			replace "%loop-player%" with "&e&l@%loop-player%%{ChatCore::ChatColor::PlayerColor::%player's uuid%}%" in message
 			play sound "BLOCK_NOTE_BLOCK_PLING" with volume 0.4 and pitch 1 to loop-player
 			send action bar "&aʏᴏᴜ ʜᴀᴠᴇ ʙᴇᴇɴ ᴘɪɴɢᴇᴅ ɪɴ ᴄʜᴀᴛ" to loop-player
 		
-		if {-ChatCore::ChatColor::PlayerColor::%player's uuid%} contains "gradient":
-			replace message with mini message from "%{-ChatCore::ChatColor::PlayerColor::%player's uuid%}%%message%" in message
+		if {ChatCore::ChatColor::PlayerColor::%player's uuid%} contains "gradient":
+			replace message with mini message from "%{ChatCore::ChatColor::PlayerColor::%player's uuid%} ? "&7"%%message%" in message
 		else:
-			replace message with "%{-ChatCore::ChatColor::PlayerColor::%player's uuid%}%%message%" in message
+			replace message with "%{ChatCore::ChatColor::PlayerColor::%player's uuid%} ? "&7"%%message%" in message
 			
 		set {_prefix} to formatPrefix(colored player's prefix)
 		set chat format to colored "%player's suffix% %{_prefix}%&r &f%player's display name% &8» %message%"
