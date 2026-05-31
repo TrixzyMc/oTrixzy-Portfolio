@@ -1,7 +1,7 @@
 {
   "ranks": {
     "owner": {
-      "prefix": "\u003cb\u003e\u003cgradient:#A14FB7:#A14FB7\u003eᴏᴡ\u003c/gradient\u003e\u003cgradient:#A14FB7:#BC7DCD\u003eɴᴇʀ\u003c/gradient\u003e\u003c/b\u003e",
+      "prefix": "\u003cb\u003e\u003cgradient:#BE5BBB:#E2A3E0\u003eᴏᴡɴᴇʀs\u003c/gradient\u003e\u003cgradient:#E2A3E0:#E2A3E0\u003eʜɪᴘ\u003c/gradient\u003e\u003c/b\u003e",
       "weight": 50
     },
     "blossom": {
@@ -9,7 +9,7 @@
       "weight": 13
     },
     "manager": {
-      "prefix": "\u003cb\u003e\u003cgradient:#D178FF:#EAC2FF\u003eᴍᴀɴᴀ\u003c/gradient\u003e\u003cgradient:#EAC2FF:#EAC2FF\u003eɢᴇr\u003c/gradient\u003e\u003c/b\u003e",
+      "prefix": "\u003cb\u003e\u003cgradient:#DB54FF:#EEADFF\u003eᴍᴀɴᴀɢᴇʀ\u003c/gradient\u003e\u003c/b\u003e",
       "weight": 23
     },
     "moderator": {
@@ -17,7 +17,7 @@
       "weight": 21
     },
     "admin": {
-      "prefix": "\u003cb\u003e\u003cgradient:#DD4545:#DD4545\u003eᴀᴅ\u003c/gradient\u003e\u003cgradient:#DD4545:#D98686\u003eᴍɪɴ\u003c/gradient\u003e\u003c/b\u003e",
+      "prefix": "\u003cb\u003e\u003cgradient:#FF7878:#FFC2C2\u003eᴀᴅᴍɪɴɪsᴛ\u003c/gradient\u003e\u003cgradient:#FFC2C2:#FFC2C2\u003eʀᴀᴛᴏʀ\u003c/gradient\u003e\u003c/b\u003e",
       "weight": 22
     },
     "default": {
