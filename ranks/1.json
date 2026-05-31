@@ -1,6 +1,6 @@
 {
-    "default": {
-        "prefix": "<gray>DEFAULT</gray>",
-        "weight": 0
-    }
+  "default": {
+    "prefix": "\u003cb\u003e\u003cgradient:#161616:#303030\u003eᴅᴇғᴀ\u003c/gradient\u003e\u003cgradient:#303030:#303030\u003eᴜʟᴛ\u003c/gradient\u003e\u003c/b\u003e",
+    "weight": 10
+  }
 }
