@@ -1,6 +1,22 @@
 {
-  "default": {
-    "prefix": "\u003cb\u003e\u003cgradient:#161616:#303030\u003eᴅᴇғᴀ\u003c/gradient\u003e\u003cgradient:#303030:#303030\u003eᴜʟᴛ\u003c/gradient\u003e\u003c/b\u003e",
-    "weight": 10
+  "ranks": {
+    "default": {
+      "prefix": "\u003cb\u003e\u003cgradient:#161616:#303030\u003eᴅᴇғᴀ\u003c/gradient\u003e\u003cgradient:#303030:#303030\u003eᴜʟᴛ\u003c/gradient\u003e\u003c/b\u003e",
+      "weight": 10
+    },
+    "rose": {
+      "prefix": "\u003cb\u003e\u003cgradient:#FF001F:#FF5267\u003eʀᴏs\u003c/gradient\u003e\u003cgradient:#FF5267:#FF5267\u003eᴇ\u003c/gradient\u003e\u003c/b\u003e",
+      "weight": 15
+    },
+    "daisy": {
+      "prefix": "\u003cb\u003e\u003cgradient:#FFD900:#FFF8D0\u003eᴅᴀɪ\u003c/gradient\u003e\u003cgradient:#FFF8D0:#FFF8D0\u003esʏ\u003c/gradient\u003e\u003c/b\u003e",
+      "weight": 0
+    }
+  },
+  "tracks": {
+    "donators": [
+      "daisy",
+      "rose"
+    ]
   }
 }
