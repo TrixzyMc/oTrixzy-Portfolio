@@ -1,3 +1,6 @@
 {
-    "default": "<b><gray>DEFAULT</gray><b>"
+    "default": {
+        "prefix": "<gray>DEFAULT</gray>",
+        "weight": 0
+    }
 }
