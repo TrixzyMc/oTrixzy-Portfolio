@@ -1,14 +1,15 @@
 # ------------------------------------------------------------------
 # ----------------------- Official Release -------------------------
 # ------------------------ CREATOR: oTrixzy ------------------------
-# -------------------------- Version: 1.2 --------------------------
+# -------------------------- Version: 1.3 --------------------------
 # -------------------- Released Date: 7/21/2024 --------------------
 # --------- Github: github.com/TrixzyMc/oTrixzy-Portfolio/ ---------
 # ------------------------------------------------------------------
 
+# Removed Vault Suffix, added custom variable and placeholder: Requires skript-placeholders for var's. 
+
 options:
 	prefix: <##B022EC>&lᴄʜᴀᴛᴄᴏʀᴇ &8» 
-
 
 on load:
 	# All deletes are required for the skript to work, Don't worry when it will reloads it will reload all chat colors.
@@ -19,6 +20,14 @@ on load:
 	# Feel free to delete this, Only gets sent to server administrators. EG. People with Permission ChatCore.Admin.
 	send "{@prefix} &fAll chat colors & chat tags have been reloaded." to all players where [input has permission "ChatCore.Admin"]
 
+# If you have skript-placeholders & placeholderapi uncomment this and you can do %chatcore_suffix% to get the player's suffix (for tab, etc)
+#placeholderapi placeholder with the prefix "chatcore":
+	#if the identifier is "suffix": 
+		#if {ChatCore::ChatTags::PlayerTags::%player's uuid%} is set:
+			#set the result to "%{ChatCore::ChatTags::PlayerTags::%player's uuid%}% "
+		#else:
+			#set the result to ""
+		
 # [!] Do not move this up, You shall touch. [!]
 on load:
 
@@ -77,17 +86,28 @@ function getRandomExampleText():: string:
 	return {ChatCore::ExampleTexts::%{_random}%}
 	
 function ChatTags(p: player, page: number=1):
-	create a gui with virtual chest inventory with 5 rows named "ChatTags (Page #%{_page}%)":
+	set {_name} to "<#B022EC>ChatTags <dark_gray>(<#6E97D7>#%{_page}%<dark_gray>)"
+	create a gui with virtual chest inventory with 5 rows named "%{_name}%":
 		make gui slot (all integers between 0 and 44) with black stained glass pane named "&7" without entire tooltip
 		make gui slot (all integers between 10 and 16, all integers between 19 and 25, all integers between 28 and 34) with stone button named "&7" without entire tooltip
 		make gui slot 4 with knowledge book named "" with all item flags
+		make gui slot 40 with barrier named "&cʀᴇᴍᴏᴠᴇ ᴛᴀɢ" with all item flags:
+			if {ChatCore::ChatTags::PlayerTags::%player's uuid%} is not set:
+				close player's inventory
+				send "{@prefix} &fYou do not have a chat tag equipped." to player
+				stop
+			
+			delete {ChatCore::ChatTags::PlayerTags::%player's uuid%}
+			send "{@prefix} &fRemoved your current tag." to player
+			stop
 		set {_start_index} to ({_page} - 1) * 21 + 1
 		set {_end_index} to {_page} * 21
 		
 		if {_page} > 1:
 			make gui slot 36 with strong healing tipped arrow named "&cʙᴀᴄᴋ ᴘᴀɢᴇ" with all item flags:
 				ChatTags({_p}, ({_page} - 1))
-
+		
+		
 		set {_slot} to 10
 
 		loop all integers between {_start_index} and {_end_index}:
@@ -101,7 +121,7 @@ function ChatTags(p: player, page: number=1):
 				add "%nl%%{_text}% <#B022EC>%{_p}% &8»&f %getRandomExampleText()%" to {_lore::*}
 				add "%nl%<#B022EC>ᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ" to {_lore::*}
 				make gui slot {_slot} with {_i} with lore {_lore::*}:
-					set player's suffix to "%{_text}%"
+					set {ChatCore::ChatTags::PlayerTags::%player's uuid%} to {_text}
 					close player's inventory
 					send action bar "{@prefix} &fYou equipped the tag %{_text}%&f!"
 					
@@ -159,7 +179,7 @@ function ChatColor(p: player, page: number=1):
 
 	open last gui to {_p}
 
-function formatPrefix(prefix: text) :: text:
+function formatColor(prefix: text) :: text:
 	set {_result} to {_prefix}
 	replace regex "&#([A-Fa-f0-9]{6})" with "<#$1>" in {_result}
 	
@@ -173,9 +193,11 @@ on chat:
 			send action bar "&aʏᴏᴜ ʜᴀᴠᴇ ʙᴇᴇɴ ᴘɪɴɢᴇᴅ ɪɴ ᴄʜᴀᴛ" to loop-player
 		
 	replace message with formatted "%{ChatCore::ChatColor::PlayerColor::%player's uuid%} ? "&7"%%message%" in message
-	set {_prefix} to formatPrefix(colored player's prefix)
-	set chat format to colored "%player's suffix% %{_prefix}%&r &f%player's display name% &8» %message%"
-	
+	set {_prefix} to formatColor(colored player's prefix)
+	set {_suffix} to ""
+	set {_suffix} to "%formatColor({ChatCore::ChatTags::PlayerTags::%player's uuid%})% " if {ChatCore::ChatTags::PlayerTags::%player's uuid%} is set
+	set chat format to colored "%{_suffix}%<bold>%{_prefix}%<reset> &f%player's display name% &8» %message%"
+		
 # --> Commands <-- #
 command /chatcolor:
 	trigger:
